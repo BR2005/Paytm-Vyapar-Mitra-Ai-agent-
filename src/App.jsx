@@ -6,8 +6,9 @@ import {
 
 const money = value => `₹${Number(value || 0).toLocaleString("en-IN")}`;
 const initialSummary = { receivedAmount: 0, successfulTransactions: 0, pendingAmount: 0, failedAmount: 0, customers: 0, averagePaymentAmount: 0 };
+const apiBase = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
 const fetchJson = async path => {
-  const response = await fetch(path, { headers: { Accept: "application/json" } });
+  const response = await fetch(`${apiBase}${path}`, { headers: { Accept: "application/json" } });
   if (!response.ok) throw new Error(`Request failed: ${response.status}`);
   return response.json();
 };
