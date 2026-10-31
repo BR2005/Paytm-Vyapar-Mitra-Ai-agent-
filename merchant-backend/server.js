@@ -101,8 +101,13 @@ app.get("/api/merchant/analytics", (req, res) => {
   const status = ["success", "pending", "failed"].map(name => ({ status: name, count: records.filter(item => item.status === name).length, amount: records.filter(item => item.status === name).reduce((sum, item) => sum + item.amount, 0) }));
   const customers = [...new Set(records.filter(item => item.status === "success").map(item => item.customer_id))];
   const returning = customers.filter(customer => records.filter(item => item.customer_id === customer && item.status === "success").length > 1).length;
+  const methods = ["UPI", "CARD", "WALLET"].map(method => ({
+    method,
+    count: records.filter(item => item.method === method && item.status === "success").length,
+    amount: records.filter(item => item.method === method && item.status === "success").reduce((sum, item) => sum + item.amount, 0)
+  }));
   res.json({
-    demo_data: true, period, summary, today: todaySummary, yesterday: yesterdaySummary, daily: daily(records), hourly: hourly(records), status,
+    demo_data: true, period, summary, today: todaySummary, yesterday: yesterdaySummary, daily: daily(records), hourly: hourly(records), status, methods,
     customerAnalytics: { newCustomers: customers.filter(customer => records.filter(item => item.customer_id === customer).length === 1).length, returningCustomers: returning, repeatPercentage: customers.length ? Math.round(returning / customers.length * 100) : 0 }
   });
 });
