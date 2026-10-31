@@ -103,6 +103,7 @@ function App() {
   return <div className="shell">
     <aside className="sidebar"><div className="brand"><div className="brand-mark">V</div><span>VyaparMitra AI</span></div><div className="tagline">Your Business. Your Language. Your AI.</div><nav><a className="active" href="#overview">▦ <span>VyaparMitra Insights</span></a><a href="#analytics">⌁ <span>VyaparMitra Payments</span></a><a href="#customers">◉ <span>VyaparMitra Growth</span></a><a href="#transactions">◷ <span>Transactions</span></a></nav></aside>
     <main className="main">
+      <img className="site-logo" src="/vyaparmitra-logo.png" alt="Paytm VyaparMitra AI" />
       <header className="topbar"><div><div className="eyebrow">Saturday, 31 October 2026</div><h1>VyaparMitra Insights</h1><p className="product-description">AI-powered merchant intelligence for payments, performance and growth.</p></div><div className="header-actions"><span className="demo-badge">Demo data</span><button className="refresh" onClick={load}>↻ Refresh</button></div></header>
       {error && <div className="error-banner">{error}</div>}
       <VoiceAssistant />
