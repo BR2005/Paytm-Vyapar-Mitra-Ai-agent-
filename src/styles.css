@@ -33,11 +33,15 @@
   --bg-surface: #ffffff;
   --bg-surface-elevated: #ffffff;
   --bg-subtle: #f1f5f9;
-  --bg-sidebar: #0b1528;
-  --sidebar-text: #e2e8f0;
-  --sidebar-hover: rgba(255, 255, 255, 0.08);
-  --sidebar-active: #00baf2;
-  --sidebar-active-bg: rgba(0, 186, 242, 0.15);
+  --bg-sidebar: #ffffff;
+  --sidebar-text: #334155;
+  --sidebar-title: #0f172a;
+  --sidebar-muted: #64748b;
+  --sidebar-hover: rgba(0, 46, 110, 0.05);
+  --sidebar-active: #002e6e;
+  --sidebar-active-bg: rgba(0, 186, 242, 0.12);
+  --sidebar-border: #e2e8f0;
+  --sidebar-toggle-bg: #f1f5f9;
 
   --text-primary: #0f172a;
   --text-secondary: #334155;
@@ -49,7 +53,7 @@
   --shadow-md: 0 6px 18px -2px rgba(0, 46, 110, 0.07);
   --shadow-lg: 0 14px 34px -4px rgba(0, 46, 110, 0.1);
   --shadow-glow: 0 0 25px rgba(0, 186, 242, 0.25);
-  --topbar-bg: rgba(255, 255, 255, 0.85);
+  --topbar-bg: rgba(255, 255, 255, 0.88);
 }
 
 /* Dark Theme Variables */
@@ -60,9 +64,13 @@
   --bg-subtle: #192645;
   --bg-sidebar: #060a14;
   --sidebar-text: #cbd5e1;
+  --sidebar-title: #ffffff;
+  --sidebar-muted: #94a3b8;
   --sidebar-hover: rgba(255, 255, 255, 0.06);
   --sidebar-active: #00baf2;
   --sidebar-active-bg: rgba(0, 186, 242, 0.16);
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-toggle-bg: rgba(255, 255, 255, 0.08);
 
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
@@ -74,7 +82,7 @@
   --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 16px 40px -4px rgba(0, 0, 0, 0.65);
   --shadow-glow: 0 0 30px rgba(0, 186, 242, 0.35);
-  --topbar-bg: rgba(16, 25, 46, 0.85);
+  --topbar-bg: rgba(16, 25, 46, 0.88);
 }
 
 /* Base Reset & Typography */
@@ -226,12 +234,12 @@ a {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
   position: sticky;
   top: 0;
   height: 100vh;
   z-index: 100;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid var(--sidebar-border);
 }
 
 .sidebar.collapsed {
@@ -239,11 +247,12 @@ a {
 }
 
 .sidebar-brand-wrapper {
-  padding: 22px 18px 18px;
+  padding: 20px 18px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--sidebar-border);
+  min-height: 72px;
 }
 
 .brand-logo-container {
@@ -253,11 +262,28 @@ a {
 }
 
 .sidebar-logo-img {
-  max-width: 190px;
+  max-width: 195px;
   height: auto;
   object-fit: contain;
-  transition: var(--transition);
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  transition: opacity 0.3s ease, transform 0.24s ease;
+  display: block;
+}
+
+.sidebar-logo-img.logo-dark {
+  filter: drop-shadow(0 2px 12px rgba(0, 186, 242, 0.22));
+}
+
+.sidebar-logo-img.logo-light {
+  filter: drop-shadow(0 2px 8px rgba(0, 46, 110, 0.08));
+}
+
+.animate-fade-in {
+  animation: logo-fade 0.3s ease-out;
+}
+
+@keyframes logo-fade {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .sidebar.collapsed .sidebar-logo-img {
@@ -337,7 +363,7 @@ a {
 
 .sidebar-footer {
   padding: 14px 14px 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--sidebar-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -374,7 +400,7 @@ a {
 .merchant-name {
   font-size: 13px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--sidebar-title);
 }
 
 .verified-shield {
@@ -383,14 +409,14 @@ a {
 
 .merchant-id {
   font-size: 11px;
-  color: #94a3b8;
+  color: var(--sidebar-muted);
   display: block;
 }
 
 .collapse-toggle-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: none;
-  color: #cbd5e1;
+  background: var(--sidebar-toggle-bg);
+  border: 1px solid var(--border-subtle);
+  color: var(--sidebar-text);
   width: 28px;
   height: 28px;
   border-radius: 6px;

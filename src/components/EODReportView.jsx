@@ -15,11 +15,13 @@ import {
   IndianRupee,
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+import { useTheme } from "../context/ThemeContext";
 import { useToast } from "./Toast";
 import { merchantApi, formatMoney } from "../services/api";
 
 export function EODReportView({ initialReport = null }) {
   const { lang, currentLangObj, t } = useLanguage();
+  const { logoSrc } = useTheme();
   const { addToast } = useToast();
 
   const [report, setReport] = useState(initialReport);
@@ -207,7 +209,8 @@ _Verified via Paytm VyaparMitra AI_`;
           <div className="eod-doc-header">
             <div className="doc-brand">
               <img
-                src="/vyaparmitra-logo.png"
+                key={logoSrc}
+                src={logoSrc}
                 alt="Paytm VyaparMitra AI"
                 className="eod-doc-logo"
               />

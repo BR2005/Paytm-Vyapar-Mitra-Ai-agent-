@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+import { useTheme } from "../context/ThemeContext";
 
 export function Sidebar({
   activeTab,
@@ -23,6 +24,7 @@ export function Sidebar({
   onCloseMobile,
 }) {
   const { t } = useLanguage();
+  const { logoSrc, isDark } = useTheme();
 
   const navItems = [
     { id: "overview", label: t("nav_overview"), icon: LayoutDashboard },
@@ -55,9 +57,10 @@ export function Sidebar({
         <div className="sidebar-brand-wrapper">
           <div className="brand-logo-container">
             <img
-              src="/vyaparmitra-logo.png"
+              key={logoSrc}
+              src={logoSrc}
               alt="Paytm VyaparMitra AI"
-              className="sidebar-logo-img"
+              className={`sidebar-logo-img logo-${isDark ? "dark" : "light"} animate-fade-in`}
             />
           </div>
 

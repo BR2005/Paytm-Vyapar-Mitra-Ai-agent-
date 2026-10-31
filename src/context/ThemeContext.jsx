@@ -16,14 +16,30 @@ export function ThemeProvider({ children }) {
     return "dark"; // Default to premium dark mode or system
   });
 
+  const isDark = theme === "dark";
+  const logoSrc = isDark ? "/vyaparmitra-logo-dark.png" : "/vyaparmitra-logo-light.png";
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+
+    // Dynamically update favicon based on theme
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (favicon) {
+      favicon.href = logoSrc;
+    }
+
+    // Dynamically update mobile browser address bar color
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) {
+      metaTheme.content = isDark ? "#060a14" : "#ffffff";
+    }
+
     try {
       localStorage.setItem("vyaparmitra_theme", theme);
     } catch (e) {
       // ignore
     }
-  }, [theme]);
+  }, [theme, isDark, logoSrc]);
 
   const toggleTheme = () => {
     setThemeState((prev) => (prev === "dark" ? "light" : "dark"));
@@ -35,10 +51,8 @@ export function ThemeProvider({ children }) {
     }
   };
 
-  const isDark = theme === "dark";
-
   return (
-    <ThemeContext.Provider value={{ theme, isDark, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, isDark, toggleTheme, setTheme, logoSrc }}>
       {children}
     </ThemeContext.Provider>
   );
