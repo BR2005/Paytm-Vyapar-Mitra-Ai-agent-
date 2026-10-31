@@ -72,7 +72,10 @@ const hourly = records => Object.entries(records.filter(item => item.status === 
   return result;
 }, {})).map(([hour, count]) => ({ hour: `${hour}:00`, successfulTransactions: count })).sort((a, b) => a.hour.localeCompare(b.hour));
 
-app.get("/", (req, res) => res.json({ status: "VyaparMitra AI Merchant API is running", product: "VyaparMitra AI", tagline: "Your Business. Your Language. Your AI.", demoData: true }));
+app.get("/", (req, res, next) => {
+  if (process.env.NODE_ENV === "production") return next();
+  res.json({ status: "VyaparMitra AI Merchant API is running", product: "VyaparMitra AI", tagline: "Your Business. Your Language. Your AI.", demoData: true });
+});
 app.get("/api/health", (req, res) => res.json({ status: "ok", demoData: true }));
 
 app.get("/api/merchant/voice-summary", (req, res) => {
