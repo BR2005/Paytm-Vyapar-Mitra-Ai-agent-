@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 app.use(cors());
@@ -125,4 +126,14 @@ app.get("/api/merchant/eod-report", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
+const distPath = path.resolve(__dirname, "../dist");
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(distPath));
+  app.use((req, res, next) => {
+    if (req.path.startsWith("/api/")) return next();
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+}
+
 app.listen(PORT, () => console.log(`VyaparMitra AI Merchant API running on port ${PORT}`));
